@@ -7,6 +7,14 @@ const socials = [
   { label: "Telegram", short: "TG", href: "https://t.me/leetfs" },
 ];
 
+const primaryLinks = [
+  { label: "Blog", detail: "Notes & Writing", href: "https://leetfs.com", tone: "acid", external: true },
+  { label: "GitHub", detail: "Code & Contributions", href: "https://github.com/Leetfs", tone: "blue", external: true },
+  { label: "X", detail: "@leetfs1", href: "https://x.com/leetfs1", tone: "coral", external: true },
+  { label: "Telegram", detail: "@leetfs", href: "https://t.me/leetfs", tone: "dark", external: true },
+  { label: "Email", detail: "lee@mtftm.com", href: "mailto:lee@mtftm.com", tone: "paper", external: false },
+];
+
 const experience = [
   {
     index: "01",
@@ -92,24 +100,10 @@ export default function Home() {
           <a href="#writing">写作</a>
           <a href="#about">关于</a>
         </nav>
-        <a className="header-contact" href="mailto:lee@mtftm.com">
-          SAY HELLO <span aria-hidden="true">↗</span>
+        <a className="header-contact" href="#links">
+          LINKS / 05 <span aria-hidden="true">↓</span>
         </a>
       </header>
-
-      <div className="social-rail" aria-label="社交媒体链接">
-        {socials.map((social) => (
-          <a
-            key={social.label}
-            href={social.href}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`${social.label}（新窗口打开）`}
-          >
-            {social.short}
-          </a>
-        ))}
-      </div>
 
       <section className="hero" id="content" aria-labelledby="hero-title">
         <div className="hero-copy">
@@ -128,24 +122,35 @@ export default function Home() {
               <strong>也相信技术应该让人更自由。</strong>
             </p>
             <div className="hero-actions">
-              <a
-                className="button button-primary"
-                href="https://leetfs.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                进入 Blog <ExternalArrow />
+              <a className="button button-primary" href="#open-source">
+                查看开源项目 <span aria-hidden="true">↓</span>
               </a>
-              <a
-                className="button button-secondary"
-                href="https://github.com/Leetfs"
-                target="_blank"
-                rel="noreferrer"
-              >
-                GitHub / Leetfs <ExternalArrow />
+              <a className="button button-secondary" href="#writing">
+                阅读最新文章 <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
+
+          <nav className="hero-link-dock" id="links" aria-label="主要外部链接">
+            <div className="hero-link-label">
+              <span>FIND ME ONLINE</span>
+              <strong>05 / LINKS</strong>
+            </div>
+            {primaryLinks.map((link) => (
+              <a
+                className={`hero-link tone-${link.tone}`}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer" : undefined}
+                key={link.label}
+                aria-label={`${link.label}${link.external ? "（新窗口打开）" : ""}`}
+              >
+                <span>{link.label}</span>
+                <small>{link.detail}</small>
+                <b aria-hidden="true">↗</b>
+              </a>
+            ))}
+          </nav>
         </div>
 
         <aside className="hero-panel" aria-label="当前工作状态">
