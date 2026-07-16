@@ -9,7 +9,8 @@ const experience = [
     index: "01",
     period: "2026 — NOW",
     title: "openRuyi Linux",
-    subtitle: "发行版开发 · 中国科学院软件研究所",
+    organization: "中国科学院软件研究所",
+    subtitle: "发行版开发",
     description:
       "面向 RISC-V 生态进行软件包重构、CVE 补丁回移与回归测试，并探索将自动化与 AI 能力带入发行版基础设施。",
     tags: ["RISC-V", "Linux", "Packaging", "Security"],
@@ -18,6 +19,7 @@ const experience = [
     index: "02",
     period: "2025",
     title: "GPGPU × LLVM",
+    organization: "中国科学院软件研究所",
     subtitle: "乘影工具链 · 编译器与代码生成",
     description:
       "为 RISC-V 自定义指令扩展完善 LLVM 工具链，补充向量 half 类型支持，处理 CodeGen 阶段的兼容性与生成正确性。",
@@ -27,6 +29,7 @@ const experience = [
     index: "03",
     period: "2025",
     title: "Performance CI",
+    organization: "中国科学院软件研究所",
     subtitle: "RISC-V 自动化测试与性能分析",
     description:
       "构建基于 Jenkins 的自动化测试流，持续追踪 OpenCV 在 RVV 场景中的性能变化，并将结果转化为可比较的报告。",
@@ -53,15 +56,6 @@ const openSource = [
     href: "https://github.com/travellings-link/travellings",
     tone: "blue",
   },
-  {
-    mark: "GH+",
-    title: "GitHelper",
-    role: "Creator · Electron",
-    description:
-      "把常用 Git 操作做成轻量的跨平台桌面工具，降低初学者进入版本协作的门槛。",
-    href: "https://github.com/Leetfs/GitHelper",
-    tone: "coral",
-  },
 ];
 
 const articles = [
@@ -74,13 +68,6 @@ const articles = [
   },
   {
     number: "A02",
-    category: "GPGPU",
-    title: "Triton 使用体验与性能分析",
-    description: "从向量加法出发，观察线程块大小如何改变 GPGPU 程序的性能表现。",
-    href: "https://leetfs.com/tips/gpgpu/trition-report",
-  },
-  {
-    number: "A03",
     category: "OPEN SOURCE",
     title: "2025 年度总结",
     description: "一份关于编译器、RISC-V 与社区协作的年度工作切片。",
@@ -221,6 +208,7 @@ export default function Home() {
                   <h3>{item.title}</h3>
                   <span>{item.period}</span>
                 </div>
+                <p className="experience-organization">{item.organization}</p>
                 <p className="experience-subtitle">{item.subtitle}</p>
                 <p className="experience-description">{item.description}</p>
                 <ul aria-label={`${item.title} 技术标签`}>
