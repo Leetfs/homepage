@@ -111,9 +111,8 @@ export default function Home() {
             <span className="status-dot" /> OPEN-SOURCE ENGINEER · SHANGHAI / BEIJING
           </p>
           <h1 id="hero-title">
-            BUILD CLOSE
-            <br />
-            TO THE <em>SYSTEM.</em>
+            <span>BUILD CLOSE</span>
+            <span className="hero-title-line">TO THE <em>SYSTEM.</em></span>
           </h1>
           <div className="hero-bottom">
             <p className="hero-intro">
