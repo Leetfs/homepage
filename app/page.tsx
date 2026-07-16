@@ -1,3 +1,6 @@
+import ArticleDeck from "./components/article-deck";
+import latestArticles from "./generated/latest-articles.json";
+
 const socials = [
   { label: "GitHub", short: "GH", href: "https://github.com/Leetfs" },
   { label: "X", short: "X", href: "https://x.com/leetfs1" },
@@ -55,23 +58,6 @@ const openSource = [
       "维护中文独立博客随机跳转网络，用代码把分散的个人表达连接成一条仍在生长的路径。",
     href: "https://github.com/travellings-link/travellings",
     tone: "blue",
-  },
-];
-
-const articles = [
-  {
-    number: "A01",
-    category: "SYSTEMS",
-    title: "RISCV 64 glibc + systemd LFS 通关攻略",
-    description: "从交叉工具链到 rootfs，完整记录一套可启动的 RISC-V Linux 构建路径。",
-    href: "https://leetfs.com/tips/system/linux/riscv-lfs",
-  },
-  {
-    number: "A02",
-    category: "OPEN SOURCE",
-    title: "2025 年度总结",
-    description: "一份关于编译器、RISC-V 与社区协作的年度工作切片。",
-    href: "https://leetfs.com/life/annual-summary/2025",
   },
 ];
 
@@ -256,25 +242,10 @@ export default function Home() {
             浏览全部文章 <ExternalArrow />
           </a>
         </div>
-        <div className="article-list">
-          {articles.map((article) => (
-            <a
-              className="article-row"
-              href={article.href}
-              target="_blank"
-              rel="noreferrer"
-              key={article.number}
-            >
-              <span className="article-number">{article.number}</span>
-              <span className="article-category">{article.category}</span>
-              <div>
-                <h3>{article.title}</h3>
-                <p>{article.description}</p>
-              </div>
-              <span className="article-arrow" aria-hidden="true">↗</span>
-            </a>
-          ))}
-        </div>
+        <ArticleDeck
+          articles={latestArticles.articles}
+          generatedAt={latestArticles.generatedAt}
+        />
       </section>
 
       <section className="section about-section" id="about" aria-labelledby="about-title">
