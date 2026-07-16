@@ -42,6 +42,15 @@ const experience = [
 
 const openSource = [
   {
+    mark: "OR",
+    title: "openRuyi",
+    role: "Contributor · Linux / Packaging / Security",
+    description:
+      "参与 RISC-V 发行版的软件包适配、安全补丁回移与基础设施建设，让系统能力稳定抵达更多架构。",
+    href: "https://github.com/openRuyi",
+    tone: "coral",
+  },
+  {
     mark: "PT",
     title: "Project Trans",
     role: "成员 · 前端 / CI / Bot / Review",
