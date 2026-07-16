@@ -112,7 +112,8 @@ export default function Home() {
           </p>
           <h1 id="hero-title">
             <span>BUILD CLOSE</span>
-            <span className="hero-title-line">TO THE <em>SYSTEM.</em></span>
+            <span>TO THE</span>
+            <span><em>SYSTEM.</em></span>
           </h1>
           <div className="hero-bottom">
             <p className="hero-intro">
