@@ -100,6 +100,7 @@ export default function Home() {
           <a href="#open-source">开源</a>
           <Link href="/blog">写作</Link>
           <Link href="/resume">简历</Link>
+          <Link href="/friends">友链</Link>
           <a href="#about">关于</a>
         </nav>
         <a className="header-contact" href="#links">
@@ -319,6 +320,9 @@ export default function Home() {
             ))}
             <Link href="/blog">
               Blog <ExternalArrow />
+            </Link>
+            <Link href="/friends">
+              Friends <ExternalArrow />
             </Link>
           </div>
           <p>lee@mtftm.com</p>

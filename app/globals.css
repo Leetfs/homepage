@@ -2051,6 +2051,260 @@ img {
 .resume-footer > div { padding-top: 1.5rem; display: flex; gap: 2rem; border-top: 1px solid #444; color: #aaa; font: 650 0.58rem/1 var(--mono); }
 .resume-footer > div span { margin-right: auto; }
 
+/* Friends */
+.friends-hero {
+  width: min(calc(100% - 3rem), var(--max));
+  min-height: min(650px, calc(100svh - var(--header-height)));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.55fr);
+  border-bottom: 1px solid var(--ink);
+}
+
+.friends-hero-main {
+  padding: clamp(3rem, 6vw, 6rem) clamp(2rem, 5vw, 5rem) 3rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.friends-hero h1 {
+  margin: auto 0;
+  font-size: clamp(4rem, 7.4vw, 7.4rem);
+  font-weight: 850;
+  line-height: 0.86;
+  letter-spacing: -0.07em;
+}
+
+.friends-hero h1 em {
+  display: inline-block;
+  margin-top: 0.12em;
+  padding: 0.06em 0.1em 0.1em 0.04em;
+  background: var(--acid);
+  font-style: normal;
+}
+
+.friends-hero-main > p:last-child {
+  max-width: 33rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.friends-hero aside {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background: var(--ink);
+  border-left: 1px solid var(--ink);
+}
+
+.friends-hero aside > span {
+  color: #999;
+  font: 650 0.58rem/1 var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.friends-nodes {
+  width: min(290px, 78%);
+  aspect-ratio: 1;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+  border: 1px solid #525252;
+  border-radius: 50%;
+}
+
+.friends-nodes::before,
+.friends-nodes::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border: 1px solid #686868;
+  border-radius: 50%;
+}
+
+.friends-nodes::after { inset: 39%; background: var(--blue); border: 0; }
+
+.friends-nodes b {
+  position: relative;
+  z-index: 2;
+  font: 850 0.9rem/1 var(--sans);
+}
+
+.friends-nodes i {
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  z-index: 3;
+  background: var(--acid);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgba(214, 255, 56, 0.12);
+}
+
+.friends-nodes i:nth-child(1) { top: 7%; left: 47%; }
+.friends-nodes i:nth-child(2) { top: 47%; right: -6px; background: var(--coral); }
+.friends-nodes i:nth-child(3) { bottom: 5%; left: 40%; background: #fff; }
+.friends-nodes i:nth-child(4) { top: 38%; left: -6px; background: var(--blue); }
+
+.friends-hero aside > p {
+  max-width: 25rem;
+  margin: 0;
+  color: #aaa;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.friends-section {
+  width: min(calc(100% - 3rem), var(--max));
+  margin: 0 auto;
+  padding: clamp(6rem, 10vw, 10rem) 0;
+  border-bottom: 1px solid var(--ink);
+  scroll-margin-top: 1rem;
+}
+
+.friends-heading {
+  margin-bottom: clamp(4rem, 7vw, 7rem);
+  display: grid;
+  grid-template-columns: 0.35fr 0.9fr 0.55fr;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: start;
+}
+
+.friends-heading h2 {
+  margin: 0;
+  font-size: clamp(3rem, 5.5vw, 5.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+.friends-heading > p:last-child {
+  max-width: 25rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--ink);
+  border-left: 1px solid var(--ink);
+}
+
+.friend-card {
+  min-height: 430px;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: minmax(120px, 0.34fr) 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 2rem;
+  position: relative;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.friend-card:hover,
+.friend-card:focus-visible {
+  z-index: 2;
+  transform: translate(-5px, -5px);
+  box-shadow: 6px 6px 0 var(--ink);
+  outline: 0;
+}
+
+.friend-card.acid { background: var(--acid); }
+.friend-card.paper { background: #fff; }
+.friend-card.blue { color: #fff; background: var(--blue); }
+.friend-card.coral { background: var(--coral); }
+
+.friend-card-topline {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  font: 650 0.58rem/1 var(--mono);
+  letter-spacing: 0.08em;
+}
+
+.friend-avatar {
+  align-self: end;
+}
+
+.friend-avatar img {
+  width: min(100%, 170px);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid currentColor;
+  filter: saturate(0.78) contrast(1.04);
+  transition: filter 180ms ease, transform 180ms ease;
+}
+
+.friend-card:hover .friend-avatar img,
+.friend-card:focus-visible .friend-avatar img { filter: saturate(1); transform: rotate(-2deg); }
+
+.friend-copy {
+  align-self: end;
+}
+
+.friend-copy > span {
+  font: 650 0.58rem/1 var(--mono);
+  letter-spacing: 0.06em;
+  opacity: 0.68;
+}
+
+.friend-copy h3 {
+  margin: 1rem 0;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.friend-copy p {
+  max-width: 27rem;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.friends-invite {
+  width: min(calc(100% - 3rem), var(--max));
+  margin: 0 auto;
+  padding: clamp(6rem, 9vw, 9rem) 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 9vw, 10rem);
+  border-bottom: 1px solid var(--ink);
+}
+
+.friends-invite h2 {
+  margin: 2rem 0 0;
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+}
+
+.friends-invite > div:last-child { align-self: end; }
+.friends-invite > div:last-child p { margin: 0 0 2rem; color: var(--muted); line-height: 1.75; }
+.friends-invite a { min-height: 54px; padding: 0 1.2rem; display: flex; justify-content: space-between; align-items: center; color: #fff; background: var(--blue); border: 1px solid var(--ink); font: 700 0.64rem/1 var(--mono); }
+
+.friends-footer {
+  min-height: 620px;
+  padding: clamp(5rem, 9vw, 9rem) max(1.5rem, calc((100vw - var(--max)) / 2)) 2rem;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background: var(--ink);
+}
+
+.friends-footer > p { margin: 0; color: #888; font: 650 0.6rem/1 var(--mono); letter-spacing: 0.08em; }
+.friends-footer > a { margin: auto 0; font-size: clamp(4.5rem, 11vw, 10rem); font-weight: 850; line-height: 0.78; letter-spacing: -0.08em; }
+.friends-footer > a em { color: var(--acid); font-style: normal; }
+.friends-footer > div { padding-top: 1.5rem; display: flex; gap: 2rem; border-top: 1px solid #444; color: #aaa; font: 650 0.58rem/1 var(--mono); }
+.friends-footer > div span { margin-right: auto; }
+
 @media (max-width: 1040px) {
   body { background-size: 16.666666% 100%; }
   .hero { grid-template-columns: 1fr 310px; }
@@ -2082,6 +2336,9 @@ img {
   .resume-hero { grid-template-columns: 1fr 320px; }
   .resume-community { grid-template-columns: 1fr; }
   .resume-community a { min-height: 240px; }
+  .friends-hero { grid-template-columns: 1fr 310px; }
+  .friends-heading { grid-template-columns: 1fr 1.5fr; }
+  .friends-heading > p:last-child { grid-column: 2; }
 }
 
 @media (max-width: 760px) {
@@ -2176,6 +2433,17 @@ img {
   .resume-block { grid-template-columns: 1fr; }
   .resume-block-title { position: relative; top: auto; }
   .resume-community { grid-template-columns: 1fr; }
+  .friends-hero,
+  .friends-section,
+  .friends-invite { width: min(calc(100% - 2rem), var(--max)); }
+  .friends-hero { min-height: auto; grid-template-columns: 1fr; }
+  .friends-hero-main { min-height: 620px; padding-right: 0; }
+  .friends-hero h1 { font-size: clamp(3.6rem, 15vw, 6rem); }
+  .friends-hero aside { min-height: 560px; border-top: 1px solid var(--ink); border-left: 0; }
+  .friends-heading { grid-template-columns: 1fr; }
+  .friends-heading > p:last-child { grid-column: auto; }
+  .friends-grid { grid-template-columns: 1fr; }
+  .friends-invite { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
@@ -2213,6 +2481,14 @@ img {
   .resume-item-main > div { flex-direction: column; gap: 0.6rem; }
   .resume-community a { min-height: 220px; }
   .resume-footer > a { font-size: 18vw; }
+  .friends-header .header-contact { font-size: 0.54rem; }
+  .friends-hero-main { min-height: 520px; }
+  .friends-hero h1 { font-size: clamp(3rem, 14vw, 4.8rem); }
+  .friends-hero aside { min-height: 500px; }
+  .friend-card { min-height: 390px; grid-template-columns: 110px 1fr; gap: 1.25rem; }
+  .friend-copy h3 { font-size: 2.2rem; }
+  .friends-footer > a { font-size: 17vw; }
+  .friends-footer > div { flex-wrap: wrap; }
 }
 
 @media (min-width: 761px) and (max-height: 700px) {
