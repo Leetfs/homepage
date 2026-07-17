@@ -8,7 +8,7 @@ const socials = [
 ];
 
 const primaryLinks = [
-  { label: "Blog", detail: "Notes & Writing", href: "https://leetfs.com", tone: "acid", external: true },
+  { label: "Blog", detail: "Notes & Writing", href: "/blog", tone: "acid", external: false },
   { label: "GitHub", detail: "Code & Contributions", href: "https://github.com/Leetfs", tone: "blue", external: true },
   { label: "X", detail: "@leetfs1", href: "https://x.com/leetfs1", tone: "coral", external: true },
   { label: "Telegram", detail: "@leetfs", href: "https://t.me/leetfs", tone: "dark", external: true },
@@ -97,7 +97,7 @@ export default function Home() {
         <nav aria-label="主导航">
           <a href="#work">工作</a>
           <a href="#open-source">开源</a>
-          <a href="#writing">写作</a>
+          <a href="/blog">写作</a>
           <a href="#about">关于</a>
         </nav>
         <a className="header-contact" href="#links">
@@ -125,7 +125,7 @@ export default function Home() {
               <a className="button button-primary" href="#open-source">
                 查看开源项目 <span aria-hidden="true">↓</span>
               </a>
-              <a className="button button-secondary" href="#writing">
+              <a className="button button-secondary" href="/blog">
                 阅读最新文章 <span aria-hidden="true">↓</span>
               </a>
             </div>
@@ -252,7 +252,7 @@ export default function Home() {
             <p className="section-index">03 / FIELD NOTES</p>
             <h2 id="writing-title">写下那些<br />真正踩过的坑。</h2>
           </div>
-          <a className="text-link" href="https://leetfs.com" target="_blank" rel="noreferrer">
+          <a className="text-link" href="/blog">
             浏览全部文章 <ExternalArrow />
           </a>
         </div>
@@ -315,7 +315,7 @@ export default function Home() {
                 {social.label} <ExternalArrow />
               </a>
             ))}
-            <a href="https://leetfs.com" target="_blank" rel="noreferrer">
+            <a href="/blog">
               Blog <ExternalArrow />
             </a>
           </div>

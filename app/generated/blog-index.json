@@ -1,0 +1,675 @@
+{
+  "generatedAt": "2026-07-17T03:09:37.743Z",
+  "source": "https://leetfs.com/sitemap.xml",
+  "total": 43,
+  "sectionCounts": {
+    "技术": 40,
+    "生活": 3
+  },
+  "articles": [
+    {
+      "number": "N01",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "打包修包指南",
+      "description": "围绕「打包修包指南」，记录配置obs、拉取、构建等实践细节。",
+      "href": "https://leetfs.com/tips/system/linux/package.html",
+      "slug": "/tips/system/linux/package",
+      "updatedAt": "2026-03-18T16:11:41.000Z",
+      "displayDate": "2026.03.18",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N02",
+      "category": "SYSTEM / WINDOWS",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "WINDOWS"
+      ],
+      "title": "在 WSL 中优雅地调用 Windows gpg4win 进行 Git 签名",
+      "description": "围绕「在 WSL 中优雅地调用 Windows gpg4win 进行 Git 签名」，记录修改/添加文件、执行等实践细节。",
+      "href": "https://leetfs.com/tips/system/windows/gpg.html",
+      "slug": "/tips/system/windows/gpg",
+      "updatedAt": "2026-03-11T08:43:04.000Z",
+      "displayDate": "2026.03.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N03",
+      "category": "SYSTEM / WINDOWS",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "WINDOWS"
+      ],
+      "title": "WSL 常用指令",
+      "description": "围绕「WSL 常用指令」，记录设置默认用户、销毁系统、建立系统等实践细节。",
+      "href": "https://leetfs.com/tips/system/windows/wsl.html",
+      "slug": "/tips/system/windows/wsl",
+      "updatedAt": "2026-03-11T08:43:04.000Z",
+      "displayDate": "2026.03.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N04",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "RISCV 64 glibc + systemd LFS 通关攻略",
+      "description": "开始想直接下载成品二进制，想了想好像和lfs精神不符，遂自行编译",
+      "href": "https://leetfs.com/tips/system/linux/riscv-lfs.html",
+      "slug": "/tips/system/linux/riscv-lfs",
+      "updatedAt": "2026-03-06T17:15:16.000Z",
+      "displayDate": "2026.03.06",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N05",
+      "category": "MISC / EPSON",
+      "section": "技术",
+      "topics": [
+        "MISC"
+      ],
+      "title": "解决 EPSON 内网打印过慢问题",
+      "description": "控制面板 - 设备和打印机 - 打印机属性 - 端口，检查当前启用端口是否为“标准 TCP/IP 端口”，如不是（例如为 EpsonNet print Port），点击添加端口，Standard TCP/IP Port…",
+      "href": "https://leetfs.com/tips/misc/epson.html",
+      "slug": "/tips/misc/epson",
+      "updatedAt": "2025-10-10T08:15:19.000Z",
+      "displayDate": "2025.10.10",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N06",
+      "category": "VRCHAT / AVATAR",
+      "section": "技术",
+      "topics": [
+        "VRCHAT",
+        "AVATAR"
+      ],
+      "title": "穿衣",
+      "description": "右击模型，Prefab - Unpack Completely",
+      "href": "https://leetfs.com/tips/vrchat/avatar/clothing.html",
+      "slug": "/tips/vrchat/avatar/clothing",
+      "updatedAt": "2025-09-28T11:40:45.000Z",
+      "displayDate": "2025.09.28",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N07",
+      "category": "VRCHAT / AVATAR",
+      "section": "技术",
+      "topics": [
+        "VRCHAT",
+        "AVATAR"
+      ],
+      "title": "模型的导入与发布",
+      "description": "访问该网址，选择 Download the Creator Companion。",
+      "href": "https://leetfs.com/tips/vrchat/avatar/import.html",
+      "slug": "/tips/vrchat/avatar/import",
+      "updatedAt": "2025-09-28T11:40:45.000Z",
+      "displayDate": "2025.09.28",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N08",
+      "category": "GPGPU / VENTUS LLVM INSTALL",
+      "section": "技术",
+      "topics": [
+        "GPGPU"
+      ],
+      "title": "乘影 GPGPU LLVM 编译器安装手记",
+      "description": "乘影 GPGPU 是一个 面向 RISC-V 的 GPGPU 架构。\\ 本文参考此仓库： 。",
+      "href": "https://leetfs.com/tips/gpgpu/ventus-llvm-install.html",
+      "slug": "/tips/gpgpu/ventus-llvm-install",
+      "updatedAt": "2025-06-22T05:46:29.000Z",
+      "displayDate": "2025.06.22",
+      "readingMinutes": 2
+    },
+    {
+      "number": "N09",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "使用 clevis + tpm2 自动解锁 LUKS 加密磁盘",
+      "description": "默认情况下每次开机均需手动输入密码，使用 tpm2 代替人工，自动授权。",
+      "href": "https://leetfs.com/tips/system/linux/clevis.html",
+      "slug": "/tips/system/linux/clevis",
+      "updatedAt": "2025-06-22T05:32:21.000Z",
+      "displayDate": "2025.06.22",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N10",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "Ubuntu 设置合盖不休眠",
+      "description": "找到 HandleLidSwitch=suspend，改为 HandleLidSwitch=ignore",
+      "href": "https://leetfs.com/tips/system/linux/handlelidswitch.html",
+      "slug": "/tips/system/linux/handlelidswitch",
+      "updatedAt": "2025-06-22T05:32:21.000Z",
+      "displayDate": "2025.06.22",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N11",
+      "category": "DEVOPS / DN42 PEER",
+      "section": "技术",
+      "topics": [
+        "DEVOPS"
+      ],
+      "title": "DN42 Peering 教程",
+      "description": "DN42 是一个大型动态虚拟专用网络（VPN），它采用了多种互联网技术（如 BGP、whois 数据库、DNS 等）。参与者通过网络隧道（GRE、OpenVPN、WireGuard、Tinc、IPsec）相互连接，并借…",
+      "href": "https://leetfs.com/tips/devops/dn42-peer.html",
+      "slug": "/tips/devops/dn42-peer",
+      "updatedAt": "2025-06-10T08:23:01.000Z",
+      "displayDate": "2025.06.10",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N12",
+      "category": "LIFE / NOTES",
+      "section": "生活",
+      "topics": [
+        "ANNUAL SUMMARY"
+      ],
+      "title": "2025 年度总结",
+      "description": "- Project Trans : Project Trans 致力创建自由开放且持续更新的跨性别知识资讯平台。我们认为每个人在性倾向、性别身份、性别表达等方面享有平等的选择权，不受污名、歧视和暴力。 - Trans…",
+      "href": "https://leetfs.com/life/annual-summary/2025.html",
+      "slug": "/life/annual-summary/2025",
+      "updatedAt": "2025-06-08T14:55:43.000Z",
+      "displayDate": "2025.06.08",
+      "readingMinutes": 3
+    },
+    {
+      "number": "N13",
+      "category": "DEVOPS / CERTBOT",
+      "section": "技术",
+      "topics": [
+        "DEVOPS"
+      ],
+      "title": "Certbot 自动获取 SSL 证书",
+      "description": "1. cloudflare 管理账户 帐户 API 令牌 API 令牌模板 编辑区域 DNS 1. 安装插件 sudo apt install python3-certbot-dns-cloudflare 1. 新建文…",
+      "href": "https://leetfs.com/tips/devops/certbot.html",
+      "slug": "/tips/devops/certbot",
+      "updatedAt": "2025-06-02T20:50:40.000Z",
+      "displayDate": "2025.06.02",
+      "readingMinutes": 2
+    },
+    {
+      "number": "N14",
+      "category": "DEVOPS / NGINX",
+      "section": "技术",
+      "topics": [
+        "DEVOPS"
+      ],
+      "title": "nginx 反代入门",
+      "description": "本教程基于 debian，使用 nginx 反代到正在运行的 docker 容器举例。",
+      "href": "https://leetfs.com/tips/devops/nginx.html",
+      "slug": "/tips/devops/nginx",
+      "updatedAt": "2025-06-02T20:50:40.000Z",
+      "displayDate": "2025.06.02",
+      "readingMinutes": 4
+    },
+    {
+      "number": "N15",
+      "category": "LIFE / NOTES",
+      "section": "生活",
+      "topics": [
+        "VRCHAT"
+      ],
+      "title": "六一快乐！",
+      "description": "围绕「六一快乐！」，记录20250601等实践细节。",
+      "href": "https://leetfs.com/life/vrchat/61.html",
+      "slug": "/life/vrchat/61",
+      "updatedAt": "2025-06-02T14:56:10.000Z",
+      "displayDate": "2025.06.02",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N16",
+      "category": "LIFE / NOTES",
+      "section": "生活",
+      "topics": [
+        "ANNUAL SUMMARY"
+      ],
+      "title": "2024 年度总结",
+      "description": "- Project Trans : Project Trans 致力创建自由开放且持续更新的跨性别知识资讯平台。我们认为每个人在性倾向、性别身份、性别表达等方面享有平等的选择权，不受污名、歧视和暴力。 - Trans…",
+      "href": "https://leetfs.com/life/annual-summary/2024.html",
+      "slug": "/life/annual-summary/2024",
+      "updatedAt": "2025-05-23T11:55:24.000Z",
+      "displayDate": "2025.05.23",
+      "readingMinutes": 5
+    },
+    {
+      "number": "N17",
+      "category": "GIT / GIT",
+      "section": "技术",
+      "topics": [
+        "GIT"
+      ],
+      "title": "Git 的简单入门",
+      "description": "安装后可在任意终端执行 Git 相关命令，也可使用 vscode 这样的自带 Git 插件的编辑器可视化管理 Git。",
+      "href": "https://leetfs.com/tips/git/git.html",
+      "slug": "/tips/git/git",
+      "updatedAt": "2025-05-15T02:30:21.000Z",
+      "displayDate": "2025.05.15",
+      "readingMinutes": 2
+    },
+    {
+      "number": "N18",
+      "category": "GPGPU / GPR",
+      "section": "技术",
+      "topics": [
+        "GPGPU"
+      ],
+      "title": "RVRegisterClass、VGPR 与 RISCVReg VGPR",
+      "description": "在这个例子中，VGPR 继承自 RVRegisterClass，而 V0 和 V1 就是具体的寄存器实例。",
+      "href": "https://leetfs.com/tips/gpgpu/gpr.html",
+      "slug": "/tips/gpgpu/gpr",
+      "updatedAt": "2025-05-13T11:31:11.000Z",
+      "displayDate": "2025.05.13",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N19",
+      "category": "GIT / GITHUB PR",
+      "section": "技术",
+      "topics": [
+        "GIT"
+      ],
+      "title": "GitHub PR 常见问题",
+      "description": "本章用于存放新手容易出现的问题，如有疑问，欢迎联系作者。",
+      "href": "https://leetfs.com/tips/git/github-pr.html",
+      "slug": "/tips/git/github-pr",
+      "updatedAt": "2025-05-05T20:41:28.000Z",
+      "displayDate": "2025.05.05",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N20",
+      "category": "GIT / GITHUB",
+      "section": "技术",
+      "topics": [
+        "GIT"
+      ],
+      "title": "给新手的 GitHub 贡献指南",
+      "description": "- vscode（可选） - Git（可选） - 一个浏览器",
+      "href": "https://leetfs.com/tips/git/github.html",
+      "slug": "/tips/git/github",
+      "updatedAt": "2025-05-05T20:41:28.000Z",
+      "displayDate": "2025.05.05",
+      "readingMinutes": 2
+    },
+    {
+      "number": "N21",
+      "category": "GPGPU / TRITION REPORT",
+      "section": "技术",
+      "topics": [
+        "GPGPU"
+      ],
+      "title": "Triton 使用体验与性能分析",
+      "description": "Triton 是为深度学习优化的 GPGPU 编程框架， 简洁、高性能 ，使用 python 环境高效编写",
+      "href": "https://leetfs.com/tips/gpgpu/trition-report.html",
+      "slug": "/tips/gpgpu/trition-report",
+      "updatedAt": "2025-05-05T20:41:28.000Z",
+      "displayDate": "2025.05.05",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N22",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "修复终端环境使用 GPG 签名报错",
+      "description": "使用终端连接服务器，调 yubikey 内的 GPG 密钥签 Git 提交时提示错误，简要排查：",
+      "href": "https://leetfs.com/tips/system/linux/gpg-sign.html",
+      "slug": "/tips/system/linux/gpg-sign",
+      "updatedAt": "2025-05-05T20:41:28.000Z",
+      "displayDate": "2025.05.05",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N23",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "ssh 代理转发",
+      "description": "开发过程中，为了更安全地在远程服务器上使用 SSH 密钥，建议通过 SSH 代理转发调用本地密钥，而不是直接将密钥存储在服务器上。这可以有效避免密钥泄露风险，提高整体安全性。",
+      "href": "https://leetfs.com/tips/system/linux/ssh-agent.html",
+      "slug": "/tips/system/linux/ssh-agent",
+      "updatedAt": "2025-05-05T20:41:28.000Z",
+      "displayDate": "2025.05.05",
+      "readingMinutes": 2
+    },
+    {
+      "number": "N24",
+      "category": "GPGPU / LIT LL",
+      "section": "技术",
+      "topics": [
+        "GPGPU"
+      ],
+      "title": "使用 lit 测试 LLVM IR 文件",
+      "description": "- lit: LLVM Integrated Tester - .ll: LLVM IR 文件",
+      "href": "https://leetfs.com/tips/gpgpu/lit-ll.html",
+      "slug": "/tips/gpgpu/lit-ll",
+      "updatedAt": "2025-05-04T07:23:45.000Z",
+      "displayDate": "2025.05.04",
+      "readingMinutes": 3
+    },
+    {
+      "number": "N25",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "Linux 修改 DNS",
+      "description": "执行 cat /etc/resolv.conf, 观察文件输出中是否有 Generated by resolvconf 或 Generated by systemd-resolved 样式的注释。",
+      "href": "https://leetfs.com/tips/system/linux/linux-dns.html",
+      "slug": "/tips/system/linux/linux-dns",
+      "updatedAt": "2025-05-02T14:33:17.000Z",
+      "displayDate": "2025.05.02",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N26",
+      "category": "GPGPU / ZVFHMIN REPORT",
+      "section": "技术",
+      "topics": [
+        "GPGPU"
+      ],
+      "title": "RISC-V Zvfh(min) 扩展支持调研报告（LLVM CodeGen阶段）",
+      "description": "本文最初发表于 xlinsist/llvm-project Issue 2，原作者为本人。遵循原仓库许可证 Apache License 2.0。在此基础上，转载并稍作整理发布于本博客。",
+      "href": "https://leetfs.com/tips/gpgpu/zvfhmin-report.html",
+      "slug": "/tips/gpgpu/zvfhmin-report",
+      "updatedAt": "2025-04-29T05:19:30.000Z",
+      "displayDate": "2025.04.29",
+      "readingMinutes": 3
+    },
+    {
+      "number": "N27",
+      "category": "RISC V / QEMU",
+      "section": "技术",
+      "topics": [
+        "RISC V"
+      ],
+      "title": "使用 QEMU 运行 RISC-V 程序",
+      "description": "围绕「使用 QEMU 运行 RISC-V 程序」，记录安装、使用等实践细节。",
+      "href": "https://leetfs.com/tips/risc-v/qemu.html",
+      "slug": "/tips/risc-v/qemu",
+      "updatedAt": "2025-04-26T09:37:10.000Z",
+      "displayDate": "2025.04.26",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N28",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "持久化环境变量",
+      "description": "围绕「持久化环境变量」，记录配置等实践细节。",
+      "href": "https://leetfs.com/tips/system/linux/env-variables.html",
+      "slug": "/tips/system/linux/env-variables",
+      "updatedAt": "2025-04-26T08:51:32.000Z",
+      "displayDate": "2025.04.26",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N29",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "安装 CUDA Toolkit",
+      "description": "围绕「安装 CUDA Toolkit」，记录安装、环境变量、测试安装状态等实践细节。",
+      "href": "https://leetfs.com/tips/system/linux/install-cuda.html",
+      "slug": "/tips/system/linux/install-cuda",
+      "updatedAt": "2025-04-23T06:04:36.000Z",
+      "displayDate": "2025.04.23",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N30",
+      "category": "FRONT / VP FONT",
+      "section": "技术",
+      "topics": [
+        "FRONT"
+      ],
+      "title": "Vitepress 自定义字体",
+      "description": "将字体文件放入 pubilc 或 assets 文件夹。",
+      "href": "https://leetfs.com/tips/front/vp-font.html",
+      "slug": "/tips/front/vp-font",
+      "updatedAt": "2025-04-22T12:56:00.000Z",
+      "displayDate": "2025.04.22",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N31",
+      "category": "LANGUAGES / PYTHON",
+      "section": "技术",
+      "topics": [
+        "LANGUAGES",
+        "PYTHON"
+      ],
+      "title": "uv 包管理器",
+      "description": "围绕「uv 包管理器」，记录简介、安装、创建虚拟环境等实践细节。",
+      "href": "https://leetfs.com/tips/languages/python/uv.html",
+      "slug": "/tips/languages/python/uv",
+      "updatedAt": "2025-04-22T12:56:00.000Z",
+      "displayDate": "2025.04.22",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N32",
+      "category": "LANGUAGES / PYTHON",
+      "section": "技术",
+      "topics": [
+        "LANGUAGES",
+        "PYTHON"
+      ],
+      "title": "Numba",
+      "description": "通过 @jit 或 @njit，自动将的 Python 函数编译为高性能机器码。",
+      "href": "https://leetfs.com/tips/languages/python/numba.html",
+      "slug": "/tips/languages/python/numba",
+      "updatedAt": "2025-04-22T12:44:32.000Z",
+      "displayDate": "2025.04.22",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N33",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "Debian 开启 BBR 拥塞控制算法",
+      "description": "编辑 etc/sysctl.conf 文件，在末尾加入：",
+      "href": "https://leetfs.com/tips/system/linux/bbr.html",
+      "slug": "/tips/system/linux/bbr",
+      "updatedAt": "2025-04-21T13:19:11.000Z",
+      "displayDate": "2025.04.21",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N34",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "Debian 安装 docker",
+      "description": "围绕「Debian 安装 docker」，记录安装docker、更新软件包索引、安装依赖包等实践细节。",
+      "href": "https://leetfs.com/tips/system/linux/install-docker.html",
+      "slug": "/tips/system/linux/install-docker",
+      "updatedAt": "2025-04-21T13:19:11.000Z",
+      "displayDate": "2025.04.21",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N35",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "使用 ssh 密钥登陆服务器并禁用密码登陆",
+      "description": "- 使用指令 ssh-keygen 生成密钥，或使用已有密钥 - 将对应公钥拷贝到 root/.ssh/authorized keys 文件内。",
+      "href": "https://leetfs.com/tips/system/linux/ssh-login.html",
+      "slug": "/tips/system/linux/ssh-login",
+      "updatedAt": "2025-04-21T13:19:11.000Z",
+      "displayDate": "2025.04.21",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N36",
+      "category": "SYSTEM / LINUX",
+      "section": "技术",
+      "topics": [
+        "SYSTEM",
+        "LINUX"
+      ],
+      "title": "debian 配置 swap",
+      "description": "可使用 free -h 检查当前 swap 分区的使用情况",
+      "href": "https://leetfs.com/tips/system/linux/swap.html",
+      "slug": "/tips/system/linux/swap",
+      "updatedAt": "2025-04-21T13:19:11.000Z",
+      "displayDate": "2025.04.21",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N37",
+      "category": "DEVOPS / HASS",
+      "section": "技术",
+      "topics": [
+        "DEVOPS"
+      ],
+      "title": "Home Assistant 反代 + 访问白名单",
+      "description": "我使用 Docker compose 安装，推荐大家也使用此方案。官方文档",
+      "href": "https://leetfs.com/tips/devops/hass.html",
+      "slug": "/tips/devops/hass",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N38",
+      "category": "FRONT / CHA JIAN",
+      "section": "技术",
+      "topics": [
+        "FRONT"
+      ],
+      "title": "实用插件推荐",
+      "description": "单击组件即可转到其代码，兼容 vue 、React 等。",
+      "href": "https://leetfs.com/tips/front/cha-jian.html",
+      "slug": "/tips/front/cha-jian",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N39",
+      "category": "FRONT / VP FONTSWITCH",
+      "section": "技术",
+      "topics": [
+        "FRONT"
+      ],
+      "title": "Vitepress 导航栏切换字体",
+      "description": "定义一个 css 变量，在导航栏按钮被点击时更新 css 变量",
+      "href": "https://leetfs.com/tips/front/vp-fontSwitch.html",
+      "slug": "/tips/front/vp-fontSwitch",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N40",
+      "category": "JENKINS / JENKINS CSS",
+      "section": "技术",
+      "topics": [
+        "JENKINS"
+      ],
+      "title": "Jenkins 允许加载内联 css 样式",
+      "description": "- No JavaScript allowed at all - No plugins (object/embed) allowed - No inline CSS, or CSS from other sites a…",
+      "href": "https://leetfs.com/tips/jenkins/jenkins-css.html",
+      "slug": "/tips/jenkins/jenkins-css",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N41",
+      "category": "JENKINS / JENKINS PIPELINE",
+      "section": "技术",
+      "topics": [
+        "JENKINS"
+      ],
+      "title": "Jenkins 声明式流水线与脚本式流水线",
+      "description": "Jenkinsfile (Declarative Pipeline)",
+      "href": "https://leetfs.com/tips/jenkins/jenkins-pipeline.html",
+      "slug": "/tips/jenkins/jenkins-pipeline",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 2
+    },
+    {
+      "number": "N42",
+      "category": "MISC / EPIC",
+      "section": "技术",
+      "topics": [
+        "MISC"
+      ],
+      "title": "将 EpicGames 公开到个人资料页",
+      "description": "EpicGames 组织人数众多，可能无法在成员页搜索到自己，导致无法设置状态。",
+      "href": "https://leetfs.com/tips/misc/epic.html",
+      "slug": "/tips/misc/epic",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 1
+    },
+    {
+      "number": "N43",
+      "category": "RISC V / RISCV GNU TOOLCHAIN",
+      "section": "技术",
+      "topics": [
+        "RISC V"
+      ],
+      "title": "RISC-V GNU 编译器工具链",
+      "description": "本文章使用预编译版本，想自行编译请参考官方文档。",
+      "href": "https://leetfs.com/tips/risc-v/riscv-gnu-toolchain.html",
+      "slug": "/tips/risc-v/riscv-gnu-toolchain",
+      "updatedAt": "2025-04-11T12:31:36.000Z",
+      "displayDate": "2025.04.11",
+      "readingMinutes": 1
+    }
+  ]
+}

@@ -2,7 +2,8 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 
 const SITEMAP_URL = "https://leetfs.com/sitemap.xml";
 const RAW_BASE = "https://raw.githubusercontent.com/Leetfs/blog/main/docs";
-const OUTPUT = new URL("../app/generated/latest-articles.json", import.meta.url);
+const LATEST_OUTPUT = new URL("../app/generated/latest-articles.json", import.meta.url);
+const INDEX_OUTPUT = new URL("../app/generated/blog-index.json", import.meta.url);
 
 function decodeEntities(value) {
   return value
@@ -102,6 +103,19 @@ function makeCategory(pathname) {
   return parts.slice(1, 3).join(" / ").replaceAll("-", " ").toUpperCase();
 }
 
+function makeSection(pathname) {
+  const [root] = pathname.split("/").filter(Boolean);
+  return root === "life" ? "生活" : "技术";
+}
+
+function makeTopics(pathname) {
+  return pathname
+    .split("/")
+    .filter(Boolean)
+    .slice(1, -1)
+    .map((part) => part.replaceAll("-", " ").toUpperCase());
+}
+
 function formatDate(value) {
   const date = new Date(value);
   return [date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate()]
@@ -118,9 +132,12 @@ async function hydrate(entry) {
   const characterCount = plainText(body).replace(/\s/g, "").length;
   return {
     category: makeCategory(url.pathname),
+    section: makeSection(url.pathname),
+    topics: makeTopics(url.pathname),
     title,
     description: makeDescription(title, body),
     href: `${entry.location}.html`,
+    slug: url.pathname,
     updatedAt: entry.modified,
     displayDate: formatDate(entry.modified),
     readingMinutes: Math.max(1, Math.ceil(characterCount / 420)),
@@ -129,39 +146,67 @@ async function hydrate(entry) {
 
 async function sync() {
   const sitemap = await fetchText(SITEMAP_URL);
-  const candidates = readSitemap(sitemap).slice(0, 12);
+  const candidates = readSitemap(sitemap);
   const hydrated = await Promise.allSettled(candidates.map(hydrate));
   const articles = hydrated
     .filter((result) => result.status === "fulfilled" && result.value)
-    .map((result) => result.value)
-    .slice(0, 3)
-    .map((article, index) => ({
-      number: `A${String(index + 1).padStart(2, "0")}`,
+    .map((result) => result.value);
+
+  const indexedArticles = articles.map((article, index) => ({
+      number: `N${String(index + 1).padStart(2, "0")}`,
       ...article,
     }));
 
-  if (articles.length !== 3) {
-    throw new Error(`Expected 3 articles, received ${articles.length}`);
+  const latestArticles = indexedArticles.slice(0, 3).map((article, index) => ({
+    ...article,
+    number: `A${String(index + 1).padStart(2, "0")}`,
+  }));
+
+  if (latestArticles.length !== 3) {
+    throw new Error(`Expected at least 3 articles, received ${articles.length}`);
   }
 
-  const payload = {
+  const latestPayload = {
     generatedAt: new Date().toISOString(),
     source: SITEMAP_URL,
-    articles,
+    articles: latestArticles,
+  };
+
+  const sectionCounts = indexedArticles.reduce((counts, article) => {
+    counts[article.section] = (counts[article.section] ?? 0) + 1;
+    return counts;
+  }, {});
+
+  const indexPayload = {
+    generatedAt: latestPayload.generatedAt,
+    source: SITEMAP_URL,
+    total: indexedArticles.length,
+    sectionCounts,
+    articles: indexedArticles,
   };
 
   await mkdir(new URL("../app/generated/", import.meta.url), { recursive: true });
-  await writeFile(OUTPUT, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
-  console.log(`[blog-sync] ${articles.map(({ title }) => title).join(" / ")}`);
+  await Promise.all([
+    writeFile(LATEST_OUTPUT, `${JSON.stringify(latestPayload, null, 2)}\n`, "utf8"),
+    writeFile(INDEX_OUTPUT, `${JSON.stringify(indexPayload, null, 2)}\n`, "utf8"),
+  ]);
+  console.log(
+    `[blog-sync] ${indexedArticles.length} articles / latest: ${latestArticles
+      .map(({ title }) => title)
+      .join(" / ")}`,
+  );
 }
 
 try {
   await sync();
 } catch (error) {
   try {
-    const cached = JSON.parse(await readFile(OUTPUT, "utf8"));
-    if (cached.articles?.length === 3) {
-      console.warn(`[blog-sync] using cached articles: ${error.message}`);
+    const [latest, index] = await Promise.all([
+      readFile(LATEST_OUTPUT, "utf8").then(JSON.parse),
+      readFile(INDEX_OUTPUT, "utf8").then(JSON.parse),
+    ]);
+    if (latest.articles?.length === 3 && index.articles?.length >= 3) {
+      console.warn(`[blog-sync] using cached article indexes: ${error.message}`);
     } else {
       throw error;
     }
