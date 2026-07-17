@@ -1,53 +1,14 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { marked } from "marked";
 
-const SITEMAP_URL = "https://leetfs.com/sitemap.xml";
-const RAW_BASE = "https://raw.githubusercontent.com/Leetfs/blog/main/docs";
+const CONTENT_ROOT = fileURLToPath(new URL("../content/blog/", import.meta.url));
+const MIGRATION_DATES = new URL("../content/blog/migration-dates.json", import.meta.url);
 const LATEST_OUTPUT = new URL("../app/generated/latest-articles.json", import.meta.url);
 const INDEX_OUTPUT = new URL("../app/generated/blog-index.json", import.meta.url);
-
-function decodeEntities(value) {
-  return value
-    .replaceAll("&amp;", "&")
-    .replaceAll("&lt;", "<")
-    .replaceAll("&gt;", ">")
-    .replaceAll("&quot;", '"')
-    .replaceAll("&#39;", "'");
-}
-
-async function fetchText(url) {
-  const response = await fetch(url, {
-    headers: { "user-agent": "Leetfs-homepage-build/1.0" },
-    signal: AbortSignal.timeout(15_000),
-  });
-
-  if (!response.ok) {
-    throw new Error(`${response.status} while fetching ${url}`);
-  }
-
-  return response.text();
-}
-
-function readSitemap(xml) {
-  return [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)]
-    .map((match) => {
-      const location = match[1].match(/<loc>(.*?)<\/loc>/)?.[1];
-      const modified = match[1].match(/<lastmod>(.*?)<\/lastmod>/)?.[1];
-      return location && modified
-        ? { location: decodeEntities(location), modified }
-        : null;
-    })
-    .filter(Boolean)
-    .filter(({ location }) => {
-      const { pathname } = new URL(location);
-      return (
-        (pathname.startsWith("/tips/") || pathname.startsWith("/life/")) &&
-        !pathname.startsWith("/en/") &&
-        !pathname.startsWith("/ja/") &&
-        !pathname.endsWith("/")
-      );
-    })
-    .sort((a, b) => Date.parse(b.modified) - Date.parse(a.modified));
-}
+const CONTENT_OUTPUT = new URL("../app/generated/blog-content.json", import.meta.url);
+const LANGUAGE_ORDER = { zh: 0, en: 1, ja: 2 };
 
 function parseFrontmatter(markdown) {
   const frontmatter = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n/);
@@ -70,6 +31,7 @@ function plainText(markdown) {
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/<[^>]+>/g, " ")
     .replace(/[#>*_~|]/g, " ")
+    .replace(/\\/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -94,24 +56,105 @@ function makeDescription(title, body) {
 
   return topics.length
     ? `围绕「${title}」，记录${topics.join("、")}等实践细节。`
-    : `围绕「${title}」整理的一篇技术实践记录。`;
+    : `围绕「${title}」整理的一篇实践记录。`;
 }
 
-function makeCategory(pathname) {
-  const parts = pathname.split("/").filter(Boolean);
-  if (parts[0] === "life") return "LIFE / NOTES";
-  return parts.slice(1, 3).join(" / ").replaceAll("-", " ").toUpperCase();
+function normalizeContainers(markdown) {
+  return markdown.replace(
+    /^:::\s*(tip|warning|danger|info|details)(?:\s+(.+))?\s*\n([\s\S]*?)\n:::\s*$/gm,
+    (_, type, label, content) => {
+      const heading = label || type.toUpperCase();
+      const quoted = content.split("\n").map((line) => `> ${line}`).join("\n");
+      return `> **${heading}**\n>\n${quoted}`;
+    },
+  );
 }
 
-function makeSection(pathname) {
-  const [root] = pathname.split("/").filter(Boolean);
-  return root === "life" ? "生活" : "技术";
+function headingSlug(value, index) {
+  const slug = plainText(value)
+    .toLocaleLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "");
+  return slug || `section-${index + 1}`;
 }
 
-function makeTopics(pathname) {
-  return pathname
-    .split("/")
-    .filter(Boolean)
+function makeToc(markdown) {
+  return [...markdown.matchAll(/^(#{2,4})\s+(.+)$/gm)].map((match, index) => ({
+    depth: match[1].length,
+    title: plainText(match[2]),
+    id: headingSlug(match[2], index),
+  }));
+}
+
+function isExternal(value) {
+  return /^(https?:|mailto:|tel:|data:)/i.test(value);
+}
+
+function resolveContentUrl(value, pageSlug, kind, articleSlugs) {
+  if (!value || value.startsWith("#") || /^(mailto:|tel:|data:)/i.test(value)) return value;
+  if (isExternal(value)) {
+    const external = new URL(value);
+    if (external.hostname !== "leetfs.com" && external.hostname !== "www.leetfs.com") return value;
+    value = `${external.pathname}${external.search}${external.hash}`;
+  }
+
+  const virtualBase = new URL(pageSlug, "https://blog.local");
+  const resolved = new URL(value, virtualBase);
+  const normalizedPath = resolved.pathname
+    .replace(/\.md$/, "")
+    .replace(/\.html$/, "")
+    .replace(/\/index$/, "");
+
+  if (kind === "asset") {
+    return `/blog-assets${resolved.pathname}`;
+  }
+
+  if (normalizedPath === "/about/resume") return `/resume${resolved.hash}`;
+  if (normalizedPath === "/about") return `/${resolved.hash}`;
+  if (articleSlugs.has(normalizedPath)) {
+    return `/blog${normalizedPath}${resolved.search}${resolved.hash}`;
+  }
+  return `/blog${resolved.hash}`;
+}
+
+function renderMarkdown(markdown, pageSlug, articleSlugs) {
+  const normalized = normalizeContainers(markdown);
+  const toc = makeToc(normalized);
+  let headingIndex = 0;
+  let html = marked.parse(normalized, { gfm: true });
+
+  html = html.replace(/<h([2-4])>([\s\S]*?)<\/h\1>/g, (_, depth, content) => {
+    const item = toc[headingIndex++];
+    return `<h${depth} id="${item?.id ?? `section-${headingIndex}`}">${content}</h${depth}>`;
+  });
+
+  html = html
+    .replace(/src="([^"]+)"/g, (_, value) => `src="${resolveContentUrl(value, pageSlug, "asset", articleSlugs)}"`)
+    .replace(/href="([^"]+)"/g, (_, value) => `href="${resolveContentUrl(value, pageSlug, "link", articleSlugs)}"`);
+
+  return { html, toc };
+}
+
+function languageFor(parts) {
+  return parts[0] === "en" || parts[0] === "ja" ? parts[0] : "zh";
+}
+
+function contentParts(parts) {
+  return languageFor(parts) === "zh" ? parts : parts.slice(1);
+}
+
+function makeCategory(parts) {
+  const canonical = contentParts(parts);
+  if (canonical[0] === "life") return "LIFE / NOTES";
+  return canonical.slice(1, 3).join(" / ").replaceAll("-", " ").toUpperCase();
+}
+
+function makeSection(parts) {
+  return contentParts(parts)[0] === "life" ? "生活" : "技术";
+}
+
+function makeTopics(parts) {
+  return contentParts(parts)
     .slice(1, -1)
     .map((part) => part.replaceAll("-", " ").toUpperCase());
 }
@@ -123,94 +166,139 @@ function formatDate(value) {
     .join(".");
 }
 
-async function hydrate(entry) {
-  const url = new URL(entry.location);
-  const markdown = await fetchText(`${RAW_BASE}${url.pathname}.md`);
-  const { title, body } = parseFrontmatter(markdown);
-  if (!title) return null;
+function stripRendered(article) {
+  return Object.fromEntries(
+    Object.entries(article).filter(([key]) => key !== "html" && key !== "toc"),
+  );
+}
 
-  const characterCount = plainText(body).replace(/\s/g, "").length;
-  return {
-    category: makeCategory(url.pathname),
-    section: makeSection(url.pathname),
-    topics: makeTopics(url.pathname),
-    title,
-    description: makeDescription(title, body),
-    href: `${entry.location}.html`,
-    slug: url.pathname,
-    updatedAt: entry.modified,
-    displayDate: formatDate(entry.modified),
-    readingMinutes: Math.max(1, Math.ceil(characterCount / 420)),
-  };
+async function collectMarkdown(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const nested = await Promise.all(entries.map(async (entry) => {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) return collectMarkdown(absolute);
+    return entry.isFile() && entry.name.endsWith(".md") ? [absolute] : [];
+  }));
+  return nested.flat();
+}
+
+function isArticle(relativePath) {
+  const parts = relativePath.split("/");
+  const canonical = contentParts(parts);
+  return (
+    (canonical[0] === "tips" || canonical[0] === "life") &&
+    canonical.at(-1) !== "index.md"
+  );
 }
 
 async function sync() {
-  const sitemap = await fetchText(SITEMAP_URL);
-  const candidates = readSitemap(sitemap);
-  const hydrated = await Promise.allSettled(candidates.map(hydrate));
+  const migratedDates = new Map(
+    Object.entries(JSON.parse(await readFile(MIGRATION_DATES, "utf8"))),
+  );
+  const files = (await collectMarkdown(CONTENT_ROOT))
+    .map((absolute) => ({
+      absolute,
+      relative: path.relative(CONTENT_ROOT, absolute).split(path.sep).join("/"),
+    }))
+    .filter(({ relative }) => isArticle(relative));
+
+  const articleSlugs = new Set(
+    files.map(({ relative }) => `/${relative.replace(/\.md$/, "")}`),
+  );
+
+  const hydrated = await Promise.all(files.map(async ({ absolute, relative }) => {
+    const markdown = await readFile(absolute, "utf8");
+    const { title, body } = parseFrontmatter(markdown);
+    if (!title) return null;
+
+    const parts = relative.replace(/\.md$/, "").split("/");
+    const language = languageFor(parts);
+    const slug = `/${parts.join("/")}`;
+    const canonicalSlug = language === "zh" ? slug : `/${parts.slice(1).join("/")}`;
+    const fileStats = await stat(absolute);
+    const updatedAt = migratedDates.get(canonicalSlug) ?? fileStats.mtime.toISOString();
+    const characterCount = plainText(body).replace(/\s/g, "").length;
+    const rendered = renderMarkdown(body, slug, articleSlugs);
+
+    return {
+      category: makeCategory(parts),
+      section: makeSection(parts),
+      language,
+      topics: makeTopics(parts),
+      title,
+      description: makeDescription(title, body),
+      href: `/blog${slug}`,
+      slug,
+      updatedAt,
+      displayDate: formatDate(updatedAt),
+      readingMinutes: Math.max(1, Math.ceil(characterCount / 420)),
+      html: rendered.html,
+      toc: rendered.toc,
+    };
+  }));
+
   const articles = hydrated
-    .filter((result) => result.status === "fulfilled" && result.value)
-    .map((result) => result.value);
+    .filter(Boolean)
+    .sort((a, b) => {
+      const byDate = Date.parse(b.updatedAt) - Date.parse(a.updatedAt);
+      return byDate || LANGUAGE_ORDER[a.language] - LANGUAGE_ORDER[b.language];
+    });
 
-  const indexedArticles = articles.map((article, index) => ({
-      number: `N${String(index + 1).padStart(2, "0")}`,
-      ...article,
-    }));
-
-  const latestArticles = indexedArticles.slice(0, 3).map((article, index) => ({
+  const numbered = articles.map((article, index) => ({
+    number: `N${String(index + 1).padStart(3, "0")}`,
+    ...article,
+  }));
+  const chineseArticles = numbered.filter((article) => article.language === "zh");
+  const latestArticles = chineseArticles.slice(0, 3).map((article, index) => ({
     ...article,
     number: `A${String(index + 1).padStart(2, "0")}`,
   }));
 
   if (latestArticles.length !== 3) {
-    throw new Error(`Expected at least 3 articles, received ${articles.length}`);
+    throw new Error(`Expected at least 3 Chinese articles, received ${chineseArticles.length}`);
   }
 
-  const latestPayload = {
-    generatedAt: new Date().toISOString(),
-    source: SITEMAP_URL,
-    articles: latestArticles,
-  };
-
-  const sectionCounts = indexedArticles.reduce((counts, article) => {
+  const generatedAt = new Date().toISOString();
+  const metadataArticles = numbered.map(stripRendered);
+  const languageCounts = Object.fromEntries(
+    ["zh", "en", "ja"].map((language) => [
+      language,
+      numbered.filter((article) => article.language === language).length,
+    ]),
+  );
+  const sectionCounts = chineseArticles.reduce((counts, article) => {
     counts[article.section] = (counts[article.section] ?? 0) + 1;
     return counts;
   }, {});
 
-  const indexPayload = {
-    generatedAt: latestPayload.generatedAt,
-    source: SITEMAP_URL,
-    total: indexedArticles.length,
-    sectionCounts,
-    articles: indexedArticles,
-  };
-
   await mkdir(new URL("../app/generated/", import.meta.url), { recursive: true });
   await Promise.all([
-    writeFile(LATEST_OUTPUT, `${JSON.stringify(latestPayload, null, 2)}\n`, "utf8"),
-    writeFile(INDEX_OUTPUT, `${JSON.stringify(indexPayload, null, 2)}\n`, "utf8"),
+    writeFile(LATEST_OUTPUT, `${JSON.stringify({
+      generatedAt,
+      source: "content/blog",
+      articles: latestArticles.map(stripRendered),
+    }, null, 2)}\n`, "utf8"),
+    writeFile(INDEX_OUTPUT, `${JSON.stringify({
+      generatedAt,
+      source: "content/blog",
+      total: chineseArticles.length,
+      allTotal: numbered.length,
+      languageCounts,
+      sectionCounts,
+      articles: metadataArticles,
+    }, null, 2)}\n`, "utf8"),
+    writeFile(CONTENT_OUTPUT, `${JSON.stringify({
+      generatedAt,
+      source: "content/blog",
+      articles: numbered,
+    }, null, 2)}\n`, "utf8"),
   ]);
+
   console.log(
-    `[blog-sync] ${indexedArticles.length} articles / latest: ${latestArticles
+    `[blog-sync] ${numbered.length} local articles (${chineseArticles.length} zh) / latest: ${latestArticles
       .map(({ title }) => title)
       .join(" / ")}`,
   );
 }
 
-try {
-  await sync();
-} catch (error) {
-  try {
-    const [latest, index] = await Promise.all([
-      readFile(LATEST_OUTPUT, "utf8").then(JSON.parse),
-      readFile(INDEX_OUTPUT, "utf8").then(JSON.parse),
-    ]);
-    if (latest.articles?.length === 3 && index.articles?.length >= 3) {
-      console.warn(`[blog-sync] using cached article indexes: ${error.message}`);
-    } else {
-      throw error;
-    }
-  } catch {
-    throw error;
-  }
-}
+await sync();

@@ -110,14 +110,12 @@ export default function ArticleDeck({ articles, generatedAt }: ArticleDeckProps)
             className="article-row"
             data-active={activeIndex === index}
             href={article.href}
-            target="_blank"
-            rel="noreferrer"
             key={article.href}
             ref={(node) => { linksRef.current[index] = node; }}
             onPointerEnter={() => activate(index)}
             onFocus={() => activate(index)}
             onKeyDown={(event) => handleKeyDown(event, index)}
-            aria-label={`${article.title}，更新于 ${article.displayDate}，约 ${article.readingMinutes} 分钟阅读（新窗口打开）`}
+            aria-label={`${article.title}，更新于 ${article.displayDate}，约 ${article.readingMinutes} 分钟阅读`}
           >
             <span className="article-number">{article.number}</span>
             <span className="article-category">{article.category}</span>

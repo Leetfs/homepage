@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 
 const channels = [
   { label: "GITHUB", href: "https://github.com/Leetfs" },
-  { label: "SOURCE", href: "https://leetfs.com" },
+  { label: "REPOSITORY", href: "https://github.com/Leetfs/homepage" },
 ];
 
 export default function BlogPage() {
-  const newest = blogIndex.articles[0];
+  const newest = blogIndex.articles.find((article) => article.language === "zh") ?? blogIndex.articles[0];
   const generatedDate = blogIndex.generatedAt.slice(0, 10).replaceAll("-", ".");
 
   return (
@@ -29,7 +29,7 @@ export default function BlogPage() {
         <nav aria-label="Blog 导航">
           <Link href="/">主页</Link>
           <a href="#blog-archive">文章</a>
-          <a href="https://leetfs.com/about/" target="_blank" rel="noreferrer">关于</a>
+          <Link href="/resume">简历</Link>
         </nav>
         <a className="header-contact" href="#blog-archive">
           INDEX / {String(blogIndex.total).padStart(2, "0")} <span aria-hidden="true">↓</span>
@@ -69,7 +69,7 @@ export default function BlogPage() {
             <h2>{newest.title}</h2>
             <span>{newest.description}</span>
           </div>
-          <a href={newest.href} target="_blank" rel="noreferrer">
+          <a href={newest.href}>
             阅读最新文章 <span aria-hidden="true">↗</span>
           </a>
         </aside>
@@ -78,7 +78,7 @@ export default function BlogPage() {
       <div className="blog-ledger" aria-label="内容同步状态">
         <span>LIVE CONTENT INDEX</span>
         <span>BUILD / {generatedDate}</span>
-        <span>SOURCE / LEETFS.COM</span>
+        <span>SOURCE / LOCAL CONTENT</span>
       </div>
 
       <BlogArchive

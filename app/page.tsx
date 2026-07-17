@@ -1,5 +1,6 @@
 import ArticleDeck from "./components/article-deck";
 import latestArticles from "./generated/latest-articles.json";
+import Link from "next/link";
 
 const socials = [
   { label: "GitHub", short: "GH", href: "https://github.com/Leetfs" },
@@ -97,7 +98,8 @@ export default function Home() {
         <nav aria-label="主导航">
           <a href="#work">工作</a>
           <a href="#open-source">开源</a>
-          <a href="/blog">写作</a>
+          <Link href="/blog">写作</Link>
+          <Link href="/resume">简历</Link>
           <a href="#about">关于</a>
         </nav>
         <a className="header-contact" href="#links">
@@ -125,9 +127,9 @@ export default function Home() {
               <a className="button button-primary" href="#open-source">
                 查看开源项目 <span aria-hidden="true">↓</span>
               </a>
-              <a className="button button-secondary" href="/blog">
+              <Link className="button button-secondary" href="/blog">
                 阅读最新文章 <span aria-hidden="true">↓</span>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -137,7 +139,7 @@ export default function Home() {
               <strong>05 / LINKS</strong>
             </div>
             {primaryLinks.map((link) => (
-              <a
+              <Link
                 className={`hero-link tone-${link.tone}`}
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
@@ -148,7 +150,7 @@ export default function Home() {
                 <span>{link.label}</span>
                 <small>{link.detail}</small>
                 <b aria-hidden="true">↗</b>
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
@@ -252,9 +254,9 @@ export default function Home() {
             <p className="section-index">03 / FIELD NOTES</p>
             <h2 id="writing-title">写下那些<br />真正踩过的坑。</h2>
           </div>
-          <a className="text-link" href="/blog">
+          <Link className="text-link" href="/blog">
             浏览全部文章 <ExternalArrow />
-          </a>
+          </Link>
         </div>
         <ArticleDeck
           articles={latestArticles.articles}
@@ -286,9 +288,9 @@ export default function Home() {
             </p>
           </div>
           <div className="about-links">
-            <a href="https://leetfs.com/about/resume" target="_blank" rel="noreferrer">
+            <Link href="/resume">
               查看完整简历 <ExternalArrow />
-            </a>
+            </Link>
             <a
               href="https://keyserver.ubuntu.com/pks/lookup?search=49DBD365E8D18E4FB84FBC3FA9977131DCD8593F&fingerprint=on&op=index"
               target="_blank"
@@ -315,9 +317,9 @@ export default function Home() {
                 {social.label} <ExternalArrow />
               </a>
             ))}
-            <a href="/blog">
+            <Link href="/blog">
               Blog <ExternalArrow />
-            </a>
+            </Link>
           </div>
           <p>lee@mtftm.com</p>
         </div>

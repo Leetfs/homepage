@@ -16,6 +16,7 @@ type BlogArticle = {
   number: string;
   category: string;
   section: string;
+  language: "zh" | "en" | "ja";
   topics: string[];
   title: string;
   description: string;
@@ -32,9 +33,15 @@ type BlogArchiveProps = {
 };
 
 const filters = ["全部", "技术", "生活"];
+const languages = [
+  { id: "zh", label: "中文" },
+  { id: "en", label: "EN" },
+  { id: "ja", label: "日本語" },
+] as const;
 
 export default function BlogArchive({ articles, generatedAt }: BlogArchiveProps) {
   const [section, setSection] = useState("全部");
+  const [language, setLanguage] = useState<BlogArticle["language"]>("zh");
   const [query, setQuery] = useState("");
   const [activeHref, setActiveHref] = useState(articles[0]?.href ?? "");
   const deferredQuery = useDeferredValue(query);
@@ -45,6 +52,7 @@ export default function BlogArchive({ articles, generatedAt }: BlogArchiveProps)
   const visibleArticles = useMemo(() => {
     const normalized = deferredQuery.trim().toLocaleLowerCase();
     return articles.filter((article) => {
+      const inLanguage = article.language === language;
       const inSection = section === "全部" || article.section === section;
       const matches = !normalized || [
         article.title,
@@ -53,9 +61,9 @@ export default function BlogArchive({ articles, generatedAt }: BlogArchiveProps)
         article.section,
         ...article.topics,
       ].join(" ").toLocaleLowerCase().includes(normalized);
-      return inSection && matches;
+      return inLanguage && inSection && matches;
     });
-  }, [articles, deferredQuery, section]);
+  }, [articles, deferredQuery, language, section]);
 
   const activeArticle =
     visibleArticles.find((article) => article.href === activeHref) ?? visibleArticles[0];
@@ -128,18 +136,36 @@ export default function BlogArchive({ articles, generatedAt }: BlogArchiveProps)
               <kbd>⌘ K</kbd>
             </span>
           </label>
-          <div className="archive-filters" aria-label="文章类型">
-            {filters.map((filter) => (
-              <button
-                type="button"
-                key={filter}
-                aria-pressed={section === filter}
-                onClick={() => setSection(filter)}
-              >
-                {filter}
-                <span>{String(filter === "全部" ? articles.length : articles.filter((article) => article.section === filter).length).padStart(2, "0")}</span>
-              </button>
-            ))}
+          <div className="archive-filter-groups">
+            <div className="archive-languages" aria-label="文章语言">
+              {languages.map((item) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  aria-pressed={language === item.id}
+                  onClick={() => setLanguage(item.id)}
+                >
+                  {item.label}
+                  <span>{String(articles.filter((article) => article.language === item.id).length).padStart(2, "0")}</span>
+                </button>
+              ))}
+            </div>
+            <div className="archive-filters" aria-label="文章类型">
+              {filters.map((filter) => (
+                <button
+                  type="button"
+                  key={filter}
+                  aria-pressed={section === filter}
+                  onClick={() => setSection(filter)}
+                >
+                  {filter}
+                  <span>{String(filter === "全部"
+                    ? articles.filter((article) => article.language === language).length
+                    : articles.filter((article) => article.language === language && article.section === filter).length
+                  ).padStart(2, "0")}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -182,8 +208,6 @@ export default function BlogArchive({ articles, generatedAt }: BlogArchiveProps)
                 className="archive-row"
                 data-active={activeArticle?.href === article.href}
                 href={article.href}
-                target="_blank"
-                rel="noreferrer"
                 key={article.href}
                 onPointerEnter={() => activate(article.href)}
                 onFocus={(event) => handleFocus(event, article.href)}
@@ -203,7 +227,7 @@ export default function BlogArchive({ articles, generatedAt }: BlogArchiveProps)
               <div className="archive-empty">
                 <strong>NO MATCH / 00</strong>
                 <p>换一个关键词，或清除当前分类。</p>
-                <button type="button" onClick={() => { setQuery(""); setSection("全部"); }}>
+                <button type="button" onClick={() => { setQuery(""); setSection("全部"); setLanguage("zh"); }}>
                   重置检索
                 </button>
               </div>
